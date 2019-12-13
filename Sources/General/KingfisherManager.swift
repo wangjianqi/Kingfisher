@@ -31,6 +31,7 @@ import Foundation
 /// The parameter value is the `receivedSize` of current response.
 /// The second parameter is the total expected data length from response's "Content-Length" header.
 /// If the expected length is not available, this block will not be called.
+// 两个参数的回调
 public typealias DownloadProgressBlock = ((_ receivedSize: Int64, _ totalSize: Int64) -> Void)
 
 /// Represents the result of a Kingfisher retrieving image task.
@@ -94,6 +95,7 @@ public class KingfisherManager {
     /// You can also passing other options for each image task by sending an `options` parameter
     /// to Kingfisher's APIs. The per image options will overwrite the default ones,
     /// if the option exists in both.
+    //一个空的数组
     public var defaultOptions = KingfisherOptionsInfo.empty
     
     // Use `defaultOptions` to overwrite the `downloader` and `cache`.
@@ -201,6 +203,7 @@ public class KingfisherManager {
             completionHandler: completionHandler)
     }
 
+    //retrieve:检索Image
     func retrieveImage(
         with source: Source,
         options: KingfisherParsedOptionsInfo,
@@ -209,6 +212,7 @@ public class KingfisherManager {
     {
         var context = RetrievingContext(options: options, originalSource: source)
 
+        // 函数嵌套
         func handler(currentSource: Source, result: (Result<RetrieveImageResult, KingfisherError>)) -> Void {
             switch result {
             case .success:
@@ -256,6 +260,7 @@ public class KingfisherManager {
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)?) -> DownloadTask?
     {
         let options = context.options
+        // 强制刷新
         if options.forceRefresh {
             return loadAndCacheImage(
                 source: source,
@@ -271,13 +276,13 @@ public class KingfisherManager {
             if loadedFromCache {
                 return nil
             }
-            
+            // 只从缓存中获取，没有就失败
             if options.onlyFromCache {
                 let error = KingfisherError.cacheError(reason: .imageNotExisting(key: source.cacheKey))
                 completionHandler?(.failure(error))
                 return nil
             }
-            
+            // 下载并缓存
             return loadAndCacheImage(
                 source: source,
                 context: context,
@@ -395,6 +400,7 @@ public class KingfisherManager {
         }
     }
 
+    // 加载和缓存图片
     @discardableResult
     func loadAndCacheImage(
         source: Source,
@@ -445,6 +451,7 @@ public class KingfisherManager {
     ///    will try to check whether an original version of that image is existing or not. If there is already an
     ///    original, Kingfisher retrieves it from cache and processes it. Then, the processed image will be store
     ///    back to cache for later use.
+    //从缓存中检索图片
     func retrieveImageFromCache(
         source: Source,
         context: RetrievingContext,
@@ -581,7 +588,7 @@ public class KingfisherManager {
         return false
     }
 }
-
+// 检索上下文
 struct RetrievingContext {
 
     var options: KingfisherParsedOptionsInfo

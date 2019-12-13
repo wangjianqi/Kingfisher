@@ -31,7 +31,7 @@ import AppKit
 #else
 import UIKit
 #endif
-
+// UIImageView
 extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     // MARK: Setting Image
@@ -73,6 +73,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
     /// Since this method will perform UI changes, you must call it from the main thread.
     /// Both `progressBlock` and `completionHandler` will be also executed in the main thread.
     ///
+    // KingfisherWrapper的方法
     @discardableResult
     public func setImage(
         with source: Source?,
@@ -90,12 +91,13 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         }
 
         var options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
+        //self.placeholder 之前的placeholder
         let noImageOrPlaceholderSet = base.image == nil && self.placeholder == nil
         if !options.keepCurrentImageWhileLoading || noImageOrPlaceholderSet {
             // Always set placeholder while there is no image/placeholder yet.
             mutatingSelf.placeholder = placeholder
         }
-
+        // 可能有值
         let maybeIndicator = indicator
         maybeIndicator?.startAnimatingView()
 
@@ -193,6 +195,8 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
     /// or network. Since this method will perform UI changes, you must call it from the main thread.
     /// Both `progressBlock` and `completionHandler` will be also executed in the main thread.
     ///
+    // 是KingfisherWrapper的方法
+    // Resource: 为什么可以是多种类型: Resource是一个协议，URL默认实现了Resource协议
     @discardableResult
     public func setImage(
         with resource: Resource?,
@@ -201,6 +205,9 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         progressBlock: DownloadProgressBlock? = nil,
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
+        //map:转换
+        //@inlinable public func map<U>(_ transform: (Wrapped) throws -> U) rethrows -> U?
+        //转成Source
         return setImage(
             with: resource.map { .network($0) },
             placeholder: placeholder,
@@ -300,6 +307,7 @@ private var imageTaskKey: Void?
 extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     // MARK: Properties
+    // UInt类型
     public private(set) var taskIdentifier: Source.Identifier.Value? {
         get {
             let box: Box<Source.Identifier.Value>? = getAssociatedObject(base, &taskIdentifierKey)
@@ -367,7 +375,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                     view.heightAnchor.constraint(equalToConstant: size.height).isActive = true
                     view.widthAnchor.constraint(equalToConstant: size.width).isActive = true
                 }
-                
+                // 先隐藏
                 newIndicator.view.isHidden = true
             }
 
@@ -377,7 +385,8 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
             setRetainedAssociatedObject(base, &indicatorKey, newValue.map(Box.init))
         }
     }
-    
+
+    //下载任务
     private var imageTask: DownloadTask? {
         get { return getAssociatedObject(base, &imageTaskKey) }
         set { setRetainedAssociatedObject(base, &imageTaskKey, newValue)}
@@ -385,9 +394,11 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     /// Represents the `Placeholder` used for this image view. A `Placeholder` will be shown in the view while
     /// it is downloading an image.
+    // 计算属性
     public private(set) var placeholder: Placeholder? {
         get { return getAssociatedObject(base, &placeholderKey) }
         set {
+            // 之前保存的值
             if let previousPlaceholder = placeholder {
                 previousPlaceholder.remove(from: base)
             }

@@ -52,6 +52,7 @@ class InfinityCollectionViewController: UICollectionViewController {
         let url = urls[indexPath.row % urls.count]
 
         // Mark each row as a new image.
+        // 下载图片缓存
         let resource = ImageResource(downloadURL: url, cacheKey: "key-\(indexPath.row)")
         cell.cellImageView.kf.setImage(with: resource)
 

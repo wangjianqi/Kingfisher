@@ -33,9 +33,11 @@ import UIKit
 
 /// KingfisherOptionsInfo is a typealias for [KingfisherOptionsInfoItem].
 /// You can use the enum of option item with value to control some behaviors of Kingfisher.
+// KingfisherOptionsInfoItem类型的数组
 public typealias KingfisherOptionsInfo = [KingfisherOptionsInfoItem]
-
+//
 extension Array where Element == KingfisherOptionsInfoItem {
+    // 一个类型是KingfisherOptionsInfoItem空的数组
     static let empty: KingfisherOptionsInfo = []
 }
 
@@ -196,6 +198,7 @@ public enum KingfisherOptionsInfoItem {
     ///
     /// Set this options will stop that flickering by keeping all loading in the same queue (typically the UI queue
     /// if you are using Kingfisher's extension methods to set an image), with a tradeoff of loading performance.
+    // Synchronously: 同时
     case loadDiskFileSynchronously
     
     /// The expiration setting for memory cache. By default, the underlying `MemoryStorage.Backend` uses the
@@ -247,6 +250,7 @@ public enum KingfisherOptionsInfoItem {
 /// The parsed options info used across Kingfisher methods. Each property in this type corresponds a case member
 /// in `KingfisherOptionsInfoItem`. When a `KingfisherOptionsInfo` sent to Kingfisher related methods, it will be
 /// parsed and converted to a `KingfisherParsedOptionsInfo` first, and pass through the internal methods.
+//Parsed:解析
 public struct KingfisherParsedOptionsInfo {
 
     public var targetCache: ImageCache? = nil
@@ -261,6 +265,7 @@ public struct KingfisherParsedOptionsInfo {
     public var waitForCache = false
     public var onlyFromCache = false
     public var backgroundDecode = false
+    //存储属性
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
     public var scaleFactor: CGFloat = 1.0
@@ -269,6 +274,7 @@ public struct KingfisherParsedOptionsInfo {
     public var processor: ImageProcessor = DefaultImageProcessor.default
     public var imageModifier: ImageModifier? = nil
     public var cacheSerializer: CacheSerializer = DefaultCacheSerializer.default
+    //属性
     public var keepCurrentImageWhileLoading = false
     public var onlyLoadFirstFrame = false
     public var cacheOriginalImage = false
@@ -279,10 +285,11 @@ public struct KingfisherParsedOptionsInfo {
     public var memoryCacheAccessExtendingExpiration: ExpirationExtending = .cacheTime
     public var diskCacheExpiration: StorageExpiration? = nil
     public var diskCacheAccessExtendingExpiration: ExpirationExtending = .cacheTime
+    //队列
     public var processingQueue: CallbackQueue? = nil
     public var progressiveJPEG: ImageProgressive? = nil
     public var alternativeSources: [Source]? = nil
-
+    //存放DataReceivingSideEffect协议的数组
     var onDataReceived: [DataReceivingSideEffect]? = nil
     
     public init(_ info: KingfisherOptionsInfo?) {
@@ -333,6 +340,7 @@ public struct KingfisherParsedOptionsInfo {
 }
 
 extension KingfisherParsedOptionsInfo {
+    // 
     var imageCreatingOptions: ImageCreatingOptions {
         return ImageCreatingOptions(
             scale: scaleFactor,
@@ -341,18 +349,18 @@ extension KingfisherParsedOptionsInfo {
             onlyFirstFrame: onlyLoadFirstFrame)
     }
 }
-
+//协议
 protocol DataReceivingSideEffect: AnyObject {
     var onShouldApply: () -> Bool { get set }
     func onDataReceived(_ session: URLSession, task: SessionDataTask, data: Data)
 }
 
 class ImageLoadingProgressSideEffect: DataReceivingSideEffect {
-
+    //实现方法
     var onShouldApply: () -> Bool = { return true }
     
     let block: DownloadProgressBlock
-
+    // 逃逸闭包
     init(_ block: @escaping DownloadProgressBlock) {
         self.block = block
     }
@@ -360,6 +368,7 @@ class ImageLoadingProgressSideEffect: DataReceivingSideEffect {
     func onDataReceived(_ session: URLSession, task: SessionDataTask, data: Data) {
         DispatchQueue.main.async {
             guard self.onShouldApply() else { return }
+            // 总共大小
             guard let expectedContentLength = task.task.response?.expectedContentLength,
                       expectedContentLength != -1 else
             {

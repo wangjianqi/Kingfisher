@@ -28,6 +28,7 @@ import Foundation
 
 /// Represents a session data task in `ImageDownloader`. It consists of an underlying `URLSessionDataTask` and
 /// an array of `TaskCallback`. Multiple `TaskCallback`s could be added for a single downloading data task.
+//任务
 public class SessionDataTask {
 
     /// Represents the type of token which used for cancelling a task.
@@ -39,6 +40,7 @@ public class SessionDataTask {
     }
 
     /// Downloaded raw data of current task.
+    //已经下载的数据
     public private(set) var mutableData: Data
 
     /// The underlying download task. It is only for debugging purpose when you encountered an error. You should not

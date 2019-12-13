@@ -33,6 +33,7 @@ class NormalLoadingViewController: UICollectionViewController {
         super.viewDidLoad()
         title = "Loading"
         setupOperationNavigationBar()
+        // 预先载入
         collectionView?.prefetchDataSource = self
     }
 }
@@ -62,9 +63,11 @@ extension NormalLoadingViewController {
             placeholder: nil,
             options: [.transition(.fade(1)), .loadDiskFileSynchronously],
             progressBlock: { receivedSize, totalSize in
+                // 进度
                 print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
             },
             completionHandler: { result in
+                // 完成
                 print(result)
                 print("\(indexPath.row + 1): Finished")
             }
@@ -78,6 +81,7 @@ extension NormalLoadingViewController {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "collectionViewCell",
             for: indexPath) as! ImageCollectionViewCell
+        // 加载中
         cell.cellImageView.kf.indicatorType = .activity
         return cell
     }
@@ -86,6 +90,7 @@ extension NormalLoadingViewController {
 extension NormalLoadingViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let urls = indexPaths.compactMap { ImageLoader.sampleImageURLs[$0.row] }
+        // 预先载入
         ImagePrefetcher(urls: urls).start()
     }
 }

@@ -96,14 +96,17 @@ extension DownloadTask {
 }
 
 /// Represents a downloading manager for requesting the image with a URL from server.
+// 下载类
 open class ImageDownloader {
 
     // MARK: Singleton
     /// The default downloader.
+    //下载单例类
     public static let `default` = ImageDownloader(name: "default")
 
     // MARK: Public Properties
     /// The duration before the downloading is timeout. Default is 15 seconds.
+    //超时时间
     open var downloadTimeout: TimeInterval = 15.0
     
     /// A set of trusted hosts when receiving server trust challenges. A challenge with host name contained in this
@@ -119,6 +122,7 @@ open class ImageDownloader {
     ///
     /// You could change the configuration before a downloading task starts.
     /// A configuration without persistent storage for caches is requested for downloader working correctly.
+    //配置
     open var sessionConfiguration = URLSessionConfiguration.ephemeral {
         didSet {
             session.invalidateAndCancel()
@@ -127,6 +131,7 @@ open class ImageDownloader {
     }
     
     /// Whether the download requests should use pipeline or not. Default is false.
+    //pipeline:管道
     open var requestsUsePipelining = false
 
     /// Delegate of this `ImageDownloader` object. See `ImageDownloaderDelegate` protocol for more.
@@ -202,6 +207,7 @@ open class ImageDownloader {
     ///   - completionHandler: Called when the download progress finishes. This block will be called in the queue
     ///                        defined in `.callbackQueue` in `options` parameter.
     /// - Returns: A downloading task. You could call `cancel` on it to stop the download task.
+    // 下载图片
     @discardableResult
     open func downloadImage(
         with url: URL,

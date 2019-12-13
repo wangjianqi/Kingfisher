@@ -29,6 +29,7 @@ import Foundation
 /// Represents an image resource at a certain url and a given cache key.
 /// Kingfisher will use a `Resource` to download a resource from network and cache it with the cache key when
 /// using `Source.network` as its image setting source.
+// 协议
 public protocol Resource {
     
     /// The key used in cache.
@@ -68,6 +69,7 @@ public struct ImageResource: Resource {
 /// URL conforms to `Resource` in Kingfisher.
 /// The `absoluteString` of this URL is used as `cacheKey`. And the URL itself will be used as `downloadURL`.
 /// If you need customize the url and/or cache key, use `ImageResource` instead.
+// URL 默认实现了Resource协议
 extension URL: Resource {
     public var cacheKey: String { return absoluteString }
     public var downloadURL: URL { return self }

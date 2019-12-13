@@ -49,6 +49,7 @@ import WatchKit
 
 /// Wrapper for Kingfisher compatible types. This type provides an extension point for
 /// connivence methods in Kingfisher.
+// 泛型
 public struct KingfisherWrapper<Base> {
     public let base: Base
     public init(_ base: Base) {
@@ -58,6 +59,7 @@ public struct KingfisherWrapper<Base> {
 
 /// Represents an object type that is compatible with Kingfisher. You can use `kf` property to get a
 /// value in the namespace of Kingfisher.
+//空的协议
 public protocol KingfisherCompatible: AnyObject { }
 
 /// Represents a value type that is compatible with Kingfisher. You can use `kf` property to get a
@@ -66,6 +68,7 @@ public protocol KingfisherCompatibleValue {}
 
 extension KingfisherCompatible {
     /// Gets a namespace holder for Kingfisher compatible types.
+    // 增加一个属性
     public var kf: KingfisherWrapper<Self> {
         get { return KingfisherWrapper(self) }
         set { }
@@ -79,10 +82,12 @@ extension KingfisherCompatibleValue {
         set { }
     }
 }
-
+// UIImage实现
 extension KFCrossPlatformImage: KingfisherCompatible { }
 #if !os(watchOS)
+// UIImageView
 extension KFCrossPlatformImageView: KingfisherCompatible { }
+// UIButton
 extension KFCrossPlatformButton: KingfisherCompatible { }
 #else
 extension WKInterfaceImage: KingfisherCompatible { }

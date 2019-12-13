@@ -26,7 +26,7 @@
 
 import Foundation
 import CoreGraphics
-
+// 自定义队列
 private let sharedProcessingQueue: CallbackQueue =
     .dispatch(DispatchQueue(label: "com.onevcat.Kingfisher.ImageDownloader.Process"))
 
@@ -76,7 +76,7 @@ final class ImageProgressiveProvider: DataReceivingSideEffect {
     
     private let decoder: ImageProgressiveDecoder
     private let queue = ImageProgressiveSerialQueue()
-    
+    // 构造方法
     init?(_ options: KingfisherParsedOptionsInfo,
           refresh: @escaping (KFCrossPlatformImage) -> Void) {
         guard let option = options.progressiveJPEG else { return nil }

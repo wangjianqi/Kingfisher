@@ -25,11 +25,11 @@
 //  THE SOFTWARE.
 
 import Foundation
-
+// 返回值泛型
 func getAssociatedObject<T>(_ object: Any, _ key: UnsafeRawPointer) -> T? {
     return objc_getAssociatedObject(object, key) as? T
 }
-
+// 值泛型
 func setRetainedAssociatedObject<T>(_ object: Any, _ key: UnsafeRawPointer, _ value: T) {
     objc_setAssociatedObject(object, key, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 }

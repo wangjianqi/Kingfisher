@@ -145,6 +145,7 @@ open class ImageCache {
     /// The default `ImageCache` object. Kingfisher will use this cache for its related methods if there is no
     /// other cache specified. The `name` of this default cache is "default", and you should not use this name
     /// for any of your customize cache.
+    //缓存单例类
     public static let `default` = ImageCache(name: "default")
 
     // MARK: Public Properties
@@ -238,8 +239,9 @@ open class ImageCache {
         if name.isEmpty {
             fatalError("[Kingfisher] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
-
+        //总共物理内存
         let totalMemory = ProcessInfo.processInfo.physicalMemory
+        //四份之一
         let costLimit = totalMemory / 4
         let memoryStorage = MemoryStorage.Backend<KFCrossPlatformImage>(config:
             .init(totalCostLimit: (costLimit > Int.max) ? Int.max : Int(costLimit)))

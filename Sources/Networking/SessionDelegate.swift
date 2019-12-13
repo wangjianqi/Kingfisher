@@ -27,6 +27,7 @@
 import Foundation
 
 // Represents the delegate object of downloader session. It also behave like a task manager for downloading.
+//Session:会议、会话
 class SessionDelegate: NSObject {
 
     typealias SessionChallengeFunc = (
@@ -135,7 +136,7 @@ class SessionDelegate: NSObject {
         task?.forceCancel()
     }
 }
-
+// 实现URLSessionDataDelegate协议
 extension SessionDelegate: URLSessionDataDelegate {
 
     func urlSession(

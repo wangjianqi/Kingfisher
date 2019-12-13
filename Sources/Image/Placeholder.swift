@@ -45,6 +45,7 @@ public protocol Placeholder {
 
 /// Default implementation of an image placeholder. The image will be set or
 /// reset directly for `image` property of the image view.
+// Image实现Placeholder协议
 extension KFCrossPlatformImage: Placeholder {
     /// How the placeholder should be added to a given image view.
     public func add(to imageView: KFCrossPlatformImageView) { imageView.image = self }
@@ -58,13 +59,14 @@ extension KFCrossPlatformImage: Placeholder {
 ///
 /// To use your customize View type as placeholder, simply let it conforming to 
 /// `Placeholder` by `extension MyView: Placeholder {}`.
+// UIView实现
 extension Placeholder where Self: KFCrossPlatformView {
     
     /// How the placeholder should be added to a given image view.
     public func add(to imageView: KFCrossPlatformImageView) {
         imageView.addSubview(self)
         translatesAutoresizingMaskIntoConstraints = false
-
+        // 布局
         centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
         heightAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true

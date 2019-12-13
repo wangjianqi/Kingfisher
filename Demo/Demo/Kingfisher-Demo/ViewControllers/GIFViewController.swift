@@ -40,7 +40,7 @@ class GIFViewController: UIViewController {
         
         let imageViewResource = ImageResource(downloadURL: url, cacheKey: "\(url)-imageview")
         imageView.kf.setImage(with: imageViewResource)
-        
+        // 动态图
         let animatedImageViewResource = ImageResource(downloadURL: url, cacheKey: "\(url)-animated_imageview")
         animatedImageView.kf.setImage(with: animatedImageViewResource)
     }

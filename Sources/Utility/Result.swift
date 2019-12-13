@@ -31,11 +31,13 @@ import Foundation
 #else
 /// A value that represents either a success or failure, capturing associated
 /// values in both cases.
+// 带泛型的枚举
 public enum Result<Success, Failure> {
     /// A success, storing a `Value`.
     case success(Success)
 
     /// A failure, storing an `Error`.
+    // 错误枚举值
     case failure(Failure)
 
     /// Evaluates the given transform closure when this `Result` instance is
@@ -133,6 +135,7 @@ extension Result where Failure: Error {
     ///
     /// - Returns: The success value, if the instance represents a success.
     /// - Throws: The failure value, if the instance represents a failure.
+    // 错误
     public func get() throws -> Success {
         switch self {
         case let .success(success):

@@ -33,6 +33,7 @@ import Foundation
 ///                       `.main`. Otherwise, call the closure immediately in current main queue.
 /// - untouch: Do not change the calling queue for closure.
 /// - dispatch: Dispatches to a specified `DispatchQueue`.
+//定义队列枚举
 public enum CallbackQueue {
     /// Dispatch the calling to `DispatchQueue.main` with an `async` behavior.
     case mainAsync
@@ -42,6 +43,7 @@ public enum CallbackQueue {
     /// Do not change the calling queue for closure.
     case untouch
     /// Dispatches to a specified `DispatchQueue`.
+    //自定义队列
     case dispatch(DispatchQueue)
     
     public func execute(_ block: @escaping () -> Void) {
@@ -61,6 +63,7 @@ public enum CallbackQueue {
         switch self {
         case .mainAsync: return .main
         case .mainCurrentOrAsync: return .main
+            //获取当前队列
         case .untouch: return OperationQueue.current?.underlyingQueue ?? .main
         case .dispatch(let queue): return queue
         }

@@ -27,6 +27,7 @@
 import Foundation
 
 /// A delegate helper type to "shadow" weak `self`, to prevent creating an unexpected retain cycle.
+// 为了防止循环引用
 class Delegate<Input, Output> {
     init() {}
     
@@ -44,7 +45,7 @@ class Delegate<Input, Output> {
         return block?(input)
     }
 }
-
+// Input是Void类型
 extension Delegate where Input == Void {
     // To make syntax better for `Void` input.
     func call() -> Output? {

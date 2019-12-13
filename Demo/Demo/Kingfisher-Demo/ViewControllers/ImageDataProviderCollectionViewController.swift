@@ -72,8 +72,9 @@ struct UserNameLetterIconImageProvider: ImageDataProvider {
         
         let format = UIGraphicsImageRendererFormat.default()
         format.scale = 1
-        
+        // 图片渲染
         let renderer = UIGraphicsImageRenderer(size: rect.size, format: format)
+        // png图片
         let data = renderer.pngData { context in
             color.setFill()
             context.fill(rect)
@@ -82,7 +83,7 @@ struct UserNameLetterIconImageProvider: ImageDataProvider {
                 NSAttributedString.Key.foregroundColor: UIColor.white,
                 .font: UIFont.systemFont(ofSize: 200)
             ]
-            
+            // 文本Size
             let textSize = letter.size(withAttributes: attributes)
             let textRect = CGRect(
                 x: (rect.width - textSize.width) / 2,

@@ -36,11 +36,12 @@ class ProcessorCollectionViewController: UICollectionViewController {
             collectionView.reloadData()
         }
     }
-    
+    // 图片处理
     var processors: [(ImageProcessor, String)] = [
         (DefaultImageProcessor.default, "Default"),
         (ResizingImageProcessor(referenceSize: .zero), "Resizing"),
         (RoundCornerImageProcessor(cornerRadius: 20), "Round Corner"),
+        // 圆角
         (RoundCornerImageProcessor(cornerRadius: 20, roundingCorners: [.topLeft, .bottomRight]), "Round Corner Partial"),
         (BlendImageProcessor(blendMode: .lighten, alpha: 1.0, backgroundColor: .red), "Blend"),
         (BlurImageProcessor(blurRadius: 5), "Blur"),

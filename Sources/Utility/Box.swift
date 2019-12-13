@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-
+// 泛型
 class Box<T> {
     var value: T
     

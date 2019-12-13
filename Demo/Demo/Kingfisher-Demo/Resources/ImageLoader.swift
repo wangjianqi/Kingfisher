@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-
+// 获取URL
 struct ImageLoader {
     static let sampleImageURLs: [URL] = {
         let prefix = "https://raw.githubusercontent.com/onevcat/Kingfisher-TestImages/master/DemoAppImage/Loading"
@@ -36,7 +36,7 @@ struct ImageLoader {
         let prefix = "https://raw.githubusercontent.com/onevcat/Kingfisher-TestImages/master/DemoAppImage/HighResolution"
         return (1...20).map { URL(string: "\(prefix)/\($0).jpg")! }
     }()
-    
+
     static let gifImageURLs: [URL] = {
         let prefix = "https://raw.githubusercontent.com/onevcat/Kingfisher-TestImages/master/DemoAppImage/GIF"
         return (1...3).map { URL(string: "\(prefix)/\($0).gif")! }

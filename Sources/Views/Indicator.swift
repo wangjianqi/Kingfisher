@@ -53,6 +53,7 @@ public enum IndicatorType {
 }
 
 /// An indicator type which can be used to show the download task is in progress.
+//协议
 public protocol Indicator {
     
     /// Called when the indicator should start animating.
@@ -63,19 +64,23 @@ public protocol Indicator {
 
     /// Center offset of the indicator. Kingfisher will use this value to determine the position of
     /// indicator in the super view.
+    //位置
     var centerOffset: CGPoint { get }
     
     /// The indicator view which would be added to the super view.
+    //要实现get方法
     var view: IndicatorView { get }
 
     /// The size strategy used when adding the indicator to image view.
     /// - Parameter imageView: The super view of indicator.
     func sizeStrategy(in imageView: KFCrossPlatformImageView) -> IndicatorSizeStrategy
 }
-
+// Size策略
 public enum IndicatorSizeStrategy {
+    // 固定的Size
     case intrinsicSize
     case full
+    //自定的Size
     case size(CGSize)
 }
 

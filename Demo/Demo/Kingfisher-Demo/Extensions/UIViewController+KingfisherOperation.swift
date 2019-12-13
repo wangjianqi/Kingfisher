@@ -49,12 +49,14 @@ protocol KingfisherActionAlertPopup {
 
 func cleanCacheAction() -> UIAlertAction {
     return UIAlertAction(title: "Clean Cache", style: .default) { _ in
+        // 清理缓存
         KingfisherManager.shared.cache.clearMemoryCache()
         KingfisherManager.shared.cache.clearDiskCache()
     }
 }
 
 func reloadAction(_ reloadable: MainDataViewReloadable) -> UIAlertAction {
+    // 刷新
     return UIAlertAction(title: "Reload", style: .default) { _ in
         reloadable.reload()
     }

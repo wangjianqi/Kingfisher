@@ -37,11 +37,13 @@ import Foundation
 public enum Source {
 
     /// Represents the source task identifier when setting an image to a view with extension methods.
+    // 内部的枚举
     public enum Identifier {
 
         /// The underlying value type of source identifier.
         public typealias Value = UInt
         static var current: Value = 0
+        // 枚举的类方法
         static func next() -> Value {
             current += 1
             return current
@@ -52,6 +54,7 @@ public enum Source {
 
     /// The target image should be got from network remotely. The associated `Resource`
     /// value defines detail information like image URL and cache key.
+    // 传入类型Resource
     case network(Resource)
     
     /// The target image should be provided in a data format. Normally, it can be an image
