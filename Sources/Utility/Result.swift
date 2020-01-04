@@ -49,6 +49,7 @@ public enum Result<Success, Failure> {
     ///   instance.
     /// - Returns: A new `Result` instance with the result of the transform, if
     ///   it was applied.
+    //NewSuccess:泛型  transform闭包
     public func map<NewSuccess>(
         _ transform: (Success) -> NewSuccess
         ) -> Result<NewSuccess, Failure> {
@@ -88,6 +89,7 @@ public enum Result<Success, Failure> {
     ///   instance.
     /// - Returns: A new `Result` instance, either from the transform or from
     ///   the previous error value.
+    //NewSuccess泛型 transform闭包：
     public func flatMap<NewSuccess>(
         _ transform: (Success) -> Result<NewSuccess, Failure>
         ) -> Result<NewSuccess, Failure> {
@@ -118,6 +120,7 @@ public enum Result<Success, Failure> {
     }
 }
 
+//类型是Error
 extension Result where Failure: Error {
     /// Returns the success value as a throwing expression.
     ///
@@ -135,7 +138,7 @@ extension Result where Failure: Error {
     ///
     /// - Returns: The success value, if the instance represents a success.
     /// - Throws: The failure value, if the instance represents a failure.
-    // 错误
+    // throws错误
     public func get() throws -> Success {
         switch self {
         case let .success(success):
@@ -179,6 +182,7 @@ extension Result : Equatable where Success : Equatable, Failure: Equatable { }
 
 extension Result : Hashable where Success : Hashable, Failure : Hashable { }
 
+// Debug
 extension Result : CustomDebugStringConvertible {
     public var debugDescription: String {
         var output = "Result."
@@ -207,6 +211,7 @@ extension Result where Failure: Error {
     ///   - onSuccess: A closure that transforms the success value.
     ///   - onFailure: A closure that transforms the error value.
     /// - Returns: A single `Output` value.
+    //Output泛型
     func match<Output>(
         onSuccess: (Success) -> Output,
         onFailure: (Failure) -> Output) -> Output
@@ -219,6 +224,7 @@ extension Result where Failure: Error {
         }
     }
 
+    //Output泛型
     func matchSuccess<Output>(with folder: (Success?) -> Output) -> Output {
         return match(
             onSuccess: { value in return folder(value) },

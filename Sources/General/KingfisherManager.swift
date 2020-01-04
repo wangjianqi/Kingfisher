@@ -35,6 +35,7 @@ import Foundation
 public typealias DownloadProgressBlock = ((_ receivedSize: Int64, _ totalSize: Int64) -> Void)
 
 /// Represents the result of a Kingfisher retrieving image task.
+//检索图片结果
 public struct RetrieveImageResult {
 
     /// Gets the image object of this result.

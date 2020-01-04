@@ -78,6 +78,7 @@ final class ImageProgressiveProvider: DataReceivingSideEffect {
     private let queue = ImageProgressiveSerialQueue()
     // 构造方法
     init?(_ options: KingfisherParsedOptionsInfo,
+          //参数是Image，返回值Void
           refresh: @escaping (KFCrossPlatformImage) -> Void) {
         guard let option = options.progressiveJPEG else { return nil }
         

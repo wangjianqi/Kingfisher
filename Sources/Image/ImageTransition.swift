@@ -42,6 +42,7 @@ import UIKit
 /// - flipFromTop: Flip from top transition.
 /// - flipFromBottom: Flip from bottom transition.
 /// - custom: Custom transition.
+// 图片过渡枚举
 public enum ImageTransition {
     /// No animation transition.
     case none
@@ -60,6 +61,7 @@ public enum ImageTransition {
     ///    - options: `UIView.AnimationOptions` should be used in the transition.
     ///    - animations: The animation block will be applied when setting image.
     ///    - completion: A block called when the transition animation finishes.
+    //自定义
     case custom(duration: TimeInterval,
                  options: UIView.AnimationOptions,
               animations: ((UIImageView, UIImage) -> Void)?,
@@ -78,7 +80,8 @@ public enum ImageTransition {
         case .custom(let duration, _, _, _): return duration
         }
     }
-    
+
+    //AnimationOptions动画类型
     var animationOptions: UIView.AnimationOptions {
         switch self {
         case .none:                         return []
@@ -92,10 +95,11 @@ public enum ImageTransition {
         case .custom(_, let options, _, _): return options
         }
     }
-    
+    //闭包
     var animations: ((UIImageView, UIImage) -> Void)? {
         switch self {
         case .custom(_, _, let animations, _): return animations
+            //$0:闭包的第一个参数，$1第二个参数
         default: return { $0.image = $1 }
         }
     }

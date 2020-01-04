@@ -35,7 +35,7 @@ import UIKit
 /// You can use the enum of option item with value to control some behaviors of Kingfisher.
 // KingfisherOptionsInfoItem类型的数组
 public typealias KingfisherOptionsInfo = [KingfisherOptionsInfoItem]
-//
+// 值类型判断使用==，泛型Element
 extension Array where Element == KingfisherOptionsInfoItem {
     // 一个类型是KingfisherOptionsInfoItem空的数组
     static let empty: KingfisherOptionsInfo = []
@@ -46,6 +46,7 @@ public enum KingfisherOptionsInfoItem {
     
     /// Kingfisher will use the associated `ImageCache` object when handling related operations,
     /// including trying to retrieve the cached images and store the downloaded image to it.
+    //缓存类
     case targetCache(ImageCache)
     
     /// The `ImageCache` for storing and retrieving original images. If `originalCache` is
@@ -256,6 +257,7 @@ public struct KingfisherParsedOptionsInfo {
     public var targetCache: ImageCache? = nil
     public var originalCache: ImageCache? = nil
     public var downloader: ImageDownloader? = nil
+    // 默认none
     public var transition: ImageTransition = .none
     public var downloadPriority: Float = URLSessionTask.defaultPriority
     public var forceRefresh = false
@@ -278,6 +280,7 @@ public struct KingfisherParsedOptionsInfo {
     public var keepCurrentImageWhileLoading = false
     public var onlyLoadFirstFrame = false
     public var cacheOriginalImage = false
+    //配置出错的图片Optional：可选值
     public var onFailureImage: Optional<KFCrossPlatformImage?> = .none
     public var alsoPrefetchToMemory = false
     public var loadDiskFileSynchronously = false
@@ -291,7 +294,8 @@ public struct KingfisherParsedOptionsInfo {
     public var alternativeSources: [Source]? = nil
     //存放DataReceivingSideEffect协议的数组
     var onDataReceived: [DataReceivingSideEffect]? = nil
-    
+
+    //构造方法
     public init(_ info: KingfisherOptionsInfo?) {
         guard let info = info else { return }
         for option in info {
@@ -351,6 +355,7 @@ extension KingfisherParsedOptionsInfo {
 }
 //协议
 protocol DataReceivingSideEffect: AnyObject {
+    //set和get方法
     var onShouldApply: () -> Bool { get set }
     func onDataReceived(_ session: URLSession, task: SessionDataTask, data: Data)
 }

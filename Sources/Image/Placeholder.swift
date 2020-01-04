@@ -59,7 +59,7 @@ extension KFCrossPlatformImage: Placeholder {
 ///
 /// To use your customize View type as placeholder, simply let it conforming to 
 /// `Placeholder` by `extension MyView: Placeholder {}`.
-// UIView实现
+// UIView实现,UIView类型的Placeholder
 extension Placeholder where Self: KFCrossPlatformView {
     
     /// How the placeholder should be added to a given image view.

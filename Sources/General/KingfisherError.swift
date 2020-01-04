@@ -32,7 +32,7 @@ extension Never {}
 /// Kingfisher related methods always throw a `KingfisherError` or invoke the callback with `KingfisherError`
 /// as its error type. To handle errors from Kingfisher, you switch over the error to get a reason catalog,
 /// then switch over the reason to know error detail.
-// 错误类型的枚举
+// 错误类型的枚举：枚举嵌套
 public enum KingfisherError: Error {
 
     // MARK: Error Reason Types
@@ -216,7 +216,7 @@ public enum KingfisherError: Error {
     /// Represents the error reason during image processing phase.
     case processorError(reason: ProcessorErrorReason)
     /// Represents the error reason during image setting in a view related class.
-    //一个枚举值:参数也是也是枚举类型
+    //一个枚举值:参数也是枚举类型
     case imageSettingError(reason: ImageSettingErrorReason)
 
     // MARK: Helper Properties & Methods

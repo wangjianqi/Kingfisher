@@ -31,7 +31,7 @@ import AppKit
 #else
 import UIKit
 #endif
-// UIImageView
+// where:UIImageView
 extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     // MARK: Setting Image
@@ -80,16 +80,18 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         placeholder: Placeholder? = nil,
         options: KingfisherOptionsInfo? = nil,
         progressBlock: DownloadProgressBlock? = nil,
+        //
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
         var mutatingSelf = self
+        //Url不存在直接显示placeholder
         guard let source = source else {
             mutatingSelf.placeholder = placeholder
             mutatingSelf.taskIdentifier = nil
             completionHandler?(.failure(KingfisherError.imageSettingError(reason: .emptySource)))
             return nil
         }
-
+        //配置
         var options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
         //self.placeholder 之前的placeholder
         let noImageOrPlaceholderSet = base.image == nil && self.placeholder == nil
@@ -127,6 +129,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
             options: options,
             downloadTaskUpdated: { mutatingSelf.imageTask = $0 },
             completionHandler: { result in
+                //
                 CallbackQueue.mainCurrentOrAsync.execute {
                     maybeIndicator?.stopAnimatingView()
                     guard issuedIdentifier == self.taskIdentifier else {
@@ -147,6 +150,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                     
                     switch result {
                     case .success(let value):
+                        //
                         guard self.needsTransition(options: options, cacheType: value.cacheType) else {
                             mutatingSelf.placeholder = nil
                             self.base.image = value.image
@@ -205,7 +209,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         progressBlock: DownloadProgressBlock? = nil,
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
-        //map:转换
+        //可选值map方法:转换
         //@inlinable public func map<U>(_ transform: (Wrapped) throws -> U) rethrows -> U?
         //转成Source
         return setImage(
@@ -254,7 +258,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
     public func cancelDownloadTask() {
         imageTask?.cancel()
     }
-
+    // （need）需要动画
     private func needsTransition(options: KingfisherParsedOptionsInfo, cacheType: CacheType) -> Bool {
         switch options.transition {
         case .none:
@@ -272,6 +276,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         #if !os(macOS)
         // Force hiding the indicator without transition first.
         UIView.transition(
+            //UIView
             with: self.base,
             duration: 0.0,
             options: [],
@@ -301,6 +306,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 private var taskIdentifierKey: Void?
 private var indicatorKey: Void?
 private var indicatorTypeKey: Void?
+//类型是Void
 private var placeholderKey: Void?
 private var imageTaskKey: Void?
 

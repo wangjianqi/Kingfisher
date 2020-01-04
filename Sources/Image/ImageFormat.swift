@@ -32,6 +32,7 @@ import Foundation
 /// - PNG: PNG image format.
 /// - JPEG: JPEG image format.
 /// - GIF: GIF image format.
+//图片格式枚举
 public enum ImageFormat {
     /// The format cannot be recognized or not supported yet.
     case unknown
